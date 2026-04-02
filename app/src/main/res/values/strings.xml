@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">thousandcoursesapp</string>
+    <string name="login">Вход</string>
+    <string name="email">Email</string>
+    <string name="email_placeholder">example@gmail.com</string>
+    <string name="password">Пароль</string>
+    <string name="password_placeholder">Введите пароль</string>
+    <string name="forgot_password">Забыл пароль</string>
+    <string name="not_have_account">Нет аккаунта?</string>
+    <string name="registration">Регистрация</string>
 </resources>
