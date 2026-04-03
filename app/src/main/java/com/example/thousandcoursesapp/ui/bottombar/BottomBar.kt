@@ -1,5 +1,6 @@
 package com.example.thousandcoursesapp.ui.bottombar
 
+import android.net.http.SslCertificate.saveState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
@@ -13,12 +14,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.thousandcoursesapp.R
-import com.example.thousandcoursesapp.ui.host.AppScreensEnum
+import com.example.thousandcoursesapp.ui.host.AppScreens
 
 @Composable
 fun BottomBar(navController: NavController) {
 
-    val items = listOf(AppScreensEnum.Main, AppScreensEnum.Favorites, AppScreensEnum.Account)
+    val items = listOf(AppScreens.Main, AppScreens.Favorites, AppScreens.Account)
 
     NavigationBar(
         containerColor = colorResource(R.color.black_for_login_screen)
@@ -31,15 +32,18 @@ fun BottomBar(navController: NavController) {
                 selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        popUpTo(AppScreensEnum.Main.route)
+                        popUpTo(AppScreens.Main.route) {
+                            saveState = true
+                        }
                         launchSingleTop = true
+                        restoreState = true
                     }
                 },
                 icon = {
                     Icon(Icons.Default.Home, contentDescription = null)
                 },
                 label = {
-                    Text(screen.route)
+                    Text(screen.name)
                 }
             )
         }

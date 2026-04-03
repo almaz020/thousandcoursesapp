@@ -13,14 +13,15 @@ import com.example.thousandcoursesapp.ui.favorites.FavoritesScreen
 import com.example.thousandcoursesapp.ui.login.LoginScreen
 import com.example.thousandcoursesapp.ui.main.MainScreen
 
-sealed class AppScreensEnum(
+sealed class AppScreens(
     val route: String,
     val showBottomBar: Boolean,
+    val name: String,
 ) {
-    object Login : AppScreensEnum("login_screen", false)
-    object Favorites : AppScreensEnum("favorites_screen", true)
-    object Main : AppScreensEnum("main_screen", true)
-    object Account: AppScreensEnum("account_screen", true)
+    object Login : AppScreens("login_screen", false, "Логин")
+    object Favorites : AppScreens("favorites_screen", true, "Избранное")
+    object Main : AppScreens("main_screen", true, "Главная")
+    object Account: AppScreens("account_screen", true, "Аккаунт")
 }
 
 @Composable
@@ -28,33 +29,40 @@ fun AppHost(
     navController: NavHostController,
     modifier: Modifier
 ) {
-    fun navigateTo(screen: AppScreensEnum) {
+    fun navigateTo(screen: AppScreens) {
         navController.navigate(screen.route) {
             launchSingleTop = true
+        }
+    }
+    fun navigateFromLoginScreen() {
+        navController.navigate(AppScreens.Main.route) {
+            popUpTo(AppScreens.Login.route) {
+                inclusive = true
+            }
         }
     }
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = AppScreensEnum.Login.route,
+        startDestination = AppScreens.Login.route,
     ) {
-        composable(AppScreensEnum.Main.route) {
+        composable(AppScreens.Main.route) {
             MainScreen(
 
             )
         }
-        composable(AppScreensEnum.Favorites.route) {
+        composable(AppScreens.Favorites.route) {
             FavoritesScreen(
 
             )
         }
-        composable(AppScreensEnum.Login.route) {
+        composable(AppScreens.Login.route) {
             LoginScreen(
-                onClick = { navigateTo(AppScreensEnum.Main) }
+                onClick = { navigateFromLoginScreen() }
             )
         }
-        composable(AppScreensEnum.Account.route) {
+        composable(AppScreens.Account.route) {
             AccountScreen(
 
             )

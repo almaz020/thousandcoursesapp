@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.thousandcoursesapp.R
 import com.example.thousandcoursesapp.ui.bottombar.BottomBar
 import com.example.thousandcoursesapp.ui.host.AppHost
-import com.example.thousandcoursesapp.ui.host.AppScreensEnum
+import com.example.thousandcoursesapp.ui.host.AppScreens
 import com.example.thousandcoursesapp.ui.systembars.SystemBars
 
 @Composable
@@ -29,9 +29,10 @@ fun App() {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val currentScreen = when (currentRoute) {
-        AppScreensEnum.Main.route -> AppScreensEnum.Main
-        AppScreensEnum.Favorites.route -> AppScreensEnum.Favorites
-        AppScreensEnum.Login.route -> AppScreensEnum.Login
+        AppScreens.Main.route -> AppScreens.Main
+        AppScreens.Favorites.route -> AppScreens.Favorites
+        AppScreens.Login.route -> AppScreens.Login
+        AppScreens.Account.route -> AppScreens.Account
         else -> null
     }
     Scaffold(

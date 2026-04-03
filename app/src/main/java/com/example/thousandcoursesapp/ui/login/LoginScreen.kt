@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -41,6 +42,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,6 +56,9 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    var email by rememberSaveable { mutableStateOf("") }
+    val isEmailValid = isValidEmail(email)
+    var password by rememberSaveable { mutableStateOf("") }
     Box(
         modifier = modifier.fillMaxSize().background(colorResource(R.color.black_for_login_screen))
     ) {
@@ -68,28 +75,136 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(28.dp))
 
-            HeaderWithField(
-                header = stringResource(R.string.email),
-                placeholder = stringResource(R.string.email_placeholder)
-            )
+            Column(
+                modifier = modifier
+            ) {
+                Text(
+                    modifier = Modifier,
+                    text = stringResource(R.string.email),
+                    color = colorResource(R.color.white_for_login_screen),
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontSize = 16.sp,
+                        letterSpacing = 0.15.sp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                BasicTextField(
+                    value = email,
+                    onValueChange = {email = it},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                        .background(colorResource(R.color.color_for_container)),
+                    singleLine = true,
+                    cursorBrush = SolidColor(colorResource(R.color.white_for_login_screen)),
+                    textStyle = TextStyle(
+                        color = colorResource(R.color.white_for_login_screen),
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_regular))
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    decorationBox = { innerTextField ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 11.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            if (email.isEmpty()) {
+                                Text(
+                                    modifier = Modifier.alpha(0.5f),
+                                    text = stringResource(R.string.email_placeholder),
+                                    style = TextStyle(
+                                        color = colorResource(R.color.white_for_login_screen),
+                                        fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                                        fontSize = 14.sp,
+                                        letterSpacing = 0.2.sp
+                                    )
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                )
+
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HeaderWithField(
-                header = stringResource(R.string.password),
-                placeholder = stringResource(R.string.password_placeholder)
-            )
+            Column(
+                modifier = modifier
+            ) {
+                Text(
+                    modifier = Modifier,
+                    text = stringResource(R.string.password),
+                    color = colorResource(R.color.white_for_login_screen),
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+                        fontSize = 16.sp,
+                        letterSpacing = 0.15.sp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                BasicTextField(
+                    value = password,
+                    onValueChange = {password = it},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                        .background(colorResource(R.color.color_for_container)),
+                    singleLine = true,
+                    cursorBrush = SolidColor(colorResource(R.color.white_for_login_screen)),
+                    textStyle = TextStyle(
+                        color = colorResource(R.color.white_for_login_screen),
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_regular))
+                    ),
+                    keyboardOptions = KeyboardOptions.Default,
+                    visualTransformation = PasswordVisualTransformation(),
+                    decorationBox = { innerTextField ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 11.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            if (password.isEmpty()) {
+                                Text(
+                                    modifier = Modifier.alpha(0.5f),
+                                    text = stringResource(R.string.password_placeholder),
+                                    style = TextStyle(
+                                        color = colorResource(R.color.white_for_login_screen),
+                                        fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                                        fontSize = 14.sp,
+                                        letterSpacing = 0.2.sp
+                                    )
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                )
+
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
+                enabled = isEmailValid,
                 onClick = onClick,
                 modifier = Modifier.fillMaxWidth().height(40.dp),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = colorResource(R.color.white_for_login_screen),
                     containerColor = colorResource(R.color.green_for_login_screen),
-                    disabledContainerColor = Color.Transparent,
-                    disabledContentColor = Color.Transparent
+                    disabledContainerColor = colorResource(R.color.green_for_login_screen),
+                    disabledContentColor = colorResource(R.color.white_for_login_screen)
                 ),
                 contentPadding = PaddingValues(vertical = 10.dp, horizontal = 147.5.dp)
             ) {
@@ -181,112 +296,10 @@ fun LoginScreen(
         }
     }
 }
-
-@Composable
-fun HeaderWithField(
-    modifier: Modifier = Modifier,
-    header: String,
-    placeholder: String,
-) {
-    var textFieldValue by rememberSaveable { mutableStateOf("") }
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            modifier = Modifier,
-            text = header,
-            color = colorResource(R.color.white_for_login_screen),
-            style = TextStyle(
-                fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                fontSize = 16.sp,
-                letterSpacing = 0.15.sp
-            )
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        BasicTextField(
-            value = textFieldValue,
-            onValueChange = { textFieldValue = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .clip(RoundedCornerShape(30.dp))
-                .background(colorResource(R.color.color_for_container)),
-            singleLine = true,
-            cursorBrush = SolidColor(colorResource(R.color.white_for_login_screen)),
-            textStyle = TextStyle(
-                color = colorResource(R.color.white_for_login_screen),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.roboto_regular))
-            ),
-            decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 11.dp),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    if (textFieldValue.isEmpty()) {
-                        Text(
-                            modifier = Modifier.alpha(0.5f),
-                            text = placeholder,
-                            style = TextStyle(
-                                color = colorResource(R.color.white_for_login_screen),
-                                fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                                fontSize = 14.sp,
-                                letterSpacing = 0.2.sp
-                            )
-                        )
-                    }
-                    innerTextField()
-                }
-            }
-        )
-
-    }
+fun isValidEmail(email: String): Boolean {
+    // Стандартное регулярное выражение для email (латиница, цифры, спецсимволы)
+    val emailRegex = Regex(
+        "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+    )
+    return email.isNotBlank() && emailRegex.matches(email)
 }
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewLoginScreen() {
-    LoginScreen(onClick = {})
-}
-
-//TextField(
-//            modifier = Modifier.fillMaxWidth().height(40.dp),
-//            value = textFieldValue,
-//            onValueChange = { newText: String -> textFieldValue = newText},
-//            placeholder = { Text(
-//                text = placeholder,
-//                modifier = Modifier.alpha(0.5f),
-//                style = TextStyle(
-//                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-//                    fontSize = 14.sp,
-//                    letterSpacing = 0.2.sp
-//                )
-//            ) },
-//            shape = RoundedCornerShape(30.dp),
-//            colors = TextFieldDefaults.colors(
-//                focusedTextColor = Color.White,
-//                unfocusedTextColor = Color.White,
-//                disabledTextColor = Color.White,
-//                errorTextColor = Color.White,
-//
-//                focusedContainerColor = colorResource(R.color.color_for_container),
-//                unfocusedContainerColor = colorResource(R.color.color_for_container),
-//                disabledContainerColor = colorResource(R.color.color_for_container),
-//                errorContainerColor = colorResource(R.color.color_for_container),
-//
-//                focusedPlaceholderColor = colorResource(R.color.white_for_login_screen),
-//                unfocusedPlaceholderColor = colorResource(R.color.white_for_login_screen),
-//                disabledPlaceholderColor = colorResource(R.color.white_for_login_screen),
-//                errorPlaceholderColor = colorResource(R.color.white_for_login_screen),
-//
-//                focusedIndicatorColor = Color.Transparent,
-//                unfocusedIndicatorColor = Color.Transparent,
-//                disabledIndicatorColor = Color.Transparent,
-//                errorIndicatorColor = Color.Transparent
-//            )
-//
-//        )
