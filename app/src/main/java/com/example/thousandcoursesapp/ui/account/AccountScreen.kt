@@ -12,7 +12,5 @@ import com.example.thousandcoursesapp.R
 fun AccountScreen(
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier.fillMaxSize().background(colorResource(R.color.black_for_login_screen))
-    )
+
 }

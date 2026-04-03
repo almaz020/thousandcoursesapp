@@ -2,6 +2,7 @@ package com.example.thousandcoursesapp.ui.host
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,16 +15,19 @@ import com.example.thousandcoursesapp.ui.main.MainScreen
 
 sealed class AppScreensEnum(
     val route: String,
-    val title: String,
+    val showBottomBar: Boolean,
 ) {
-    object Login : AppScreensEnum("login_screen", "Логин")
-    object Favorites : AppScreensEnum("favorites_screen", "Избранное")
-    object Main : AppScreensEnum("main_screen", "Главная")
-    object Account: AppScreensEnum("account_screen", "Аккаунт")
+    object Login : AppScreensEnum("login_screen", false)
+    object Favorites : AppScreensEnum("favorites_screen", true)
+    object Main : AppScreensEnum("main_screen", true)
+    object Account: AppScreensEnum("account_screen", true)
 }
 
 @Composable
-fun AppHost(navController: NavHostController) {
+fun AppHost(
+    navController: NavHostController,
+    modifier: Modifier
+) {
     fun navigateTo(screen: AppScreensEnum) {
         navController.navigate(screen.route) {
             launchSingleTop = true
@@ -31,6 +35,7 @@ fun AppHost(navController: NavHostController) {
     }
 
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = AppScreensEnum.Login.route,
     ) {
@@ -46,10 +51,10 @@ fun AppHost(navController: NavHostController) {
         }
         composable(AppScreensEnum.Login.route) {
             LoginScreen(
-                onClick = {}
+                onClick = { navigateTo(AppScreensEnum.Main) }
             )
         }
-        composable(AppScreensEnum.Main.route) {
+        composable(AppScreensEnum.Account.route) {
             AccountScreen(
 
             )

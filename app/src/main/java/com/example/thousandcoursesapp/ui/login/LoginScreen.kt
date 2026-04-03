@@ -56,7 +56,7 @@ fun LoginScreen(
         modifier = modifier.fillMaxSize().background(colorResource(R.color.black_for_login_screen))
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().statusBarsPadding().padding(start = 16.dp, end = 16.dp, top = 100.dp)
+            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 100.dp)
         ) {
             Text(
                 modifier = Modifier,
