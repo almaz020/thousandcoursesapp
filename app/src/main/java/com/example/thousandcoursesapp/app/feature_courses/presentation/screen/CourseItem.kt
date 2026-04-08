@@ -3,6 +3,7 @@ package com.example.thousandcoursesapp.app.feature_courses.presentation.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -162,7 +163,7 @@ fun CourseItem(
                 )
                 Spacer(Modifier.height(10.dp))
                 Row(
-
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         modifier = Modifier,
@@ -175,9 +176,9 @@ fun CourseItem(
                             fontFamily = FontFamily(Font(R.font.roboto_medium))
                         )
                     )
-                    Spacer(Modifier.width(175.dp))
+                    Spacer(Modifier.weight(1f))
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
                             modifier = Modifier,

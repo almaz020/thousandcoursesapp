@@ -198,8 +198,8 @@ fun LoginScreen(
                 colors = ButtonDefaults.buttonColors(
                     contentColor = colorResource(R.color.white_for_login_screen),
                     containerColor = colorResource(R.color.green_for_login_screen),
-                    disabledContainerColor = colorResource(R.color.green_for_login_screen),
-                    disabledContentColor = colorResource(R.color.white_for_login_screen)
+                    disabledContainerColor = colorResource(R.color.green_for_login_screen).copy(alpha = 0.5f),
+                    disabledContentColor = colorResource(R.color.white_for_login_screen).copy(alpha = 0.7f)
                 ),
                 contentPadding = PaddingValues(vertical = 10.dp, horizontal = 147.5.dp)
             ) {
