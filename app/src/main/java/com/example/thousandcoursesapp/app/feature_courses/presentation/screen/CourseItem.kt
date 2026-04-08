@@ -50,7 +50,8 @@ fun CourseItem(
 ) {
     Box(
         modifier = Modifier
-            .size(width = 328.dp, height = 236.dp)
+            .height(height = 236.dp)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(colorResource(R.color.black_for_main_screen))
             .clickable(onClick = {}) // сюда передать переход на экран курса

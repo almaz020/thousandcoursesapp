@@ -114,7 +114,11 @@ fun CoursesScreen() {
 
             Spacer(Modifier.height(16.dp))
 
-            LazyColumn() { }
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                items(4) {
+                    CourseItem()
+                }
+            }
         }
 
 
