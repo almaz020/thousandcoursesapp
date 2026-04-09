@@ -8,4 +8,7 @@
     <string name="forgot_password">Забыл пароль</string>
     <string name="not_have_account">Нет аккаунта?</string>
     <string name="registration">Регистрация</string>
+    <string name="search_placeholder">Search courses...</string>
+    <string name="for_sort">По дате добавления</string>
+    <string name="podrobnee">Подробнее</string>
 </resources>
