@@ -1,6 +1,6 @@
 package com.example.thousandcoursesapp.app.feature_courses.presentation.model
 
-import com.example.thousandcoursesapp.app.feature_courses.domain.Course
+import com.example.thousandcoursesapp.app.feature_courses.domain.model.Course
 
 sealed class CoursesState {
 

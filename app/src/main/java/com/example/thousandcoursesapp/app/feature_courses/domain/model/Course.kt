@@ -1,4 +1,4 @@
-package com.example.thousandcoursesapp.app.feature_courses.domain
+package com.example.thousandcoursesapp.app.feature_courses.domain.model
 
 data class Course(
     val id: Int,

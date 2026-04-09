@@ -1,4 +1,7 @@
-package com.example.thousandcoursesapp.app.feature_courses.presentation.screen
+package com.example.thousandcoursesapp.app.feature_favorites.presentation.screen
+
+import androidx.compose.animation.animateColorAsState
+import com.example.thousandcoursesapp.app.feature_courses.presentation.screen.CourseItem
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,16 +42,16 @@ import androidx.compose.ui.unit.sp
 import com.example.thousandcoursesapp.R
 import com.example.thousandcoursesapp.app.feature_courses.presentation.model.CoursesState
 import com.example.thousandcoursesapp.app.feature_courses.presentation.viewmodel.CoursesViewModel
+import com.example.thousandcoursesapp.app.feature_favorites.presentation.viewmodel.FavoritesViewModel
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CoursesScreen(
-    viewModel: CoursesViewModel = koinViewModel(),
+fun FavoritesScreen(
+    viewModel: FavoritesViewModel = koinViewModel(),
 ) {
-    val state by viewModel.state.collectAsState()
+    val courses by viewModel.favorites.collectAsState()
 
-    val courses = (state as? CoursesState.Success)?.courses ?: emptyList()
 
     Box(
         modifier = Modifier.fillMaxSize().background(colorResource(R.color.black_for_login_screen)),
@@ -67,25 +70,25 @@ fun CoursesScreen(
                     onValueChange = { },
                     readOnly = true,
                     decorationBox = { innerTextField ->
-                            Row {
-                                Image(
-                                    modifier = Modifier.padding(start = 18.dp, top = 18.dp, bottom = 18.dp),
-                                    painter = painterResource(R.drawable.search_icon),
-                                    contentDescription = null
+                        Row {
+                            Image(
+                                modifier = Modifier.padding(start = 18.dp, top = 18.dp, bottom = 18.dp),
+                                painter = painterResource(R.drawable.search_icon),
+                                contentDescription = null
+                            )
+                            Spacer(Modifier.width(18.dp))
+                            Text(
+                                modifier = Modifier.padding(vertical = 19.dp).alpha(0.5f),
+                                text = stringResource(R.string.search_placeholder),
+                                style = TextStyle(
+                                    color = colorResource(R.color.white_for_login_screen),
+                                    fontSize = 14.sp,
+                                    lineHeight = 18.sp,
+                                    letterSpacing = 0.25.sp,
+                                    fontFamily = FontFamily(Font(R.font.roboto_regular))
                                 )
-                                Spacer(Modifier.width(18.dp))
-                                Text(
-                                    modifier = Modifier.padding(vertical = 19.dp).alpha(0.5f),
-                                    text = stringResource(R.string.search_placeholder),
-                                    style = TextStyle(
-                                        color = colorResource(R.color.white_for_login_screen),
-                                        fontSize = 14.sp,
-                                        lineHeight = 18.sp,
-                                        letterSpacing = 0.25.sp,
-                                        fontFamily = FontFamily(Font(R.font.roboto_regular))
-                                    )
-                                )
-                            }
+                            )
+                        }
                         innerTextField()
                     }
                 )
@@ -101,7 +104,7 @@ fun CoursesScreen(
 
             Row(
                 modifier = Modifier.align(Alignment.End).clickable {
-                    viewModel.sortByDate()
+
                 }, // сюда передать сортировку
                 horizontalArrangement = Arrangement.End
             ) {
@@ -144,10 +147,4 @@ fun CoursesScreen(
 
 
     }
-}
-
-@Composable
-@Preview(showSystemUi = true)
-fun fs() {
-    CoursesScreen()
 }

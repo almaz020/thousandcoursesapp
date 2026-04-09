@@ -14,21 +14,21 @@ fun AppNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = "login"
+        startDestination = Screen.Login.route
     ) {
 
-        composable("login") {
+        composable(Screen.Login.route) {
             LoginScreen(
                 onClick = {
-                    navController.navigate("courses") {
-                        popUpTo("login") { inclusive = true }
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable("courses") {
-            CoursesScreen()
+        composable(Screen.Main.route) {
+            MainScreen(navController)
         }
     }
 }
